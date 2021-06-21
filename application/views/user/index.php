@@ -4,7 +4,13 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-    <div class="card mb-3" style="max-width: 540px;">
+    <div class="row">
+        <div class="col-lg-8">
+            <?= $this->session->flashdata('pesan'); ?>
+        </div>
+    </div>
+
+    <div class="card mb-3 col-lg-8" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
                 <img src="<?= base_url('asset/img/profil/') . $user['image']; ?>" alt="..." class="img-fluid">

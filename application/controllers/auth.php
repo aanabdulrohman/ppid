@@ -10,12 +10,23 @@ class Auth extends CI_Controller
     }
     public function index()
     {
+        // agar tiidak bisa logout lewat url
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
         $this->load->view('templates/nav');
         $this->load->view('auth/home');
         $this->load->view('templates/footer');
     }
     public function login()
     {
+
+        // agar tidak bisa logout lewat url
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == false) {
@@ -74,6 +85,11 @@ class Auth extends CI_Controller
 
     public function registration()
     {
+        // agar tidak bisa logout lewat url
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
         // nama
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         // email
@@ -114,11 +130,17 @@ class Auth extends CI_Controller
 
     public function logout()
     {
+
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role');
 
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Kamu berhasil logout !
           </div>');
         redirect('auth/login');
+    }
+
+    public function blocked()
+    {
+        $this->load->view('auth/blocked');
     }
 }
