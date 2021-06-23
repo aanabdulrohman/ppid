@@ -12,11 +12,23 @@ class User extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $data['title'] = 'My Profile';
+        $data['title'] = 'Dashboard User';
         $this->load->view('templates/header_user', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/index', $data);
+        $this->load->view('templates/footer_user');
+    }
+
+    public function profile()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['title'] = 'My Profile';
+        $this->load->view('templates/header_user', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('user/profile', $data);
         $this->load->view('templates/footer_user');
     }
 
@@ -67,7 +79,7 @@ class User extends CI_Controller
             $this->db->update('user');
 
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Profile kamu berhasil di update !</div>');
-            redirect('user');
+            redirect('user/profile');
         }
     }
 

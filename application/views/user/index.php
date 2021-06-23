@@ -2,26 +2,51 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+    <h1 class="h3 mb-4 text-gray-800 text-center">Ajukan Permintaan</h1>
 
     <div class="row">
         <div class="col-lg-8">
-            <?= $this->session->flashdata('pesan'); ?>
-        </div>
-    </div>
+            <form action="" method="post">
 
-    <div class="card mb-3 col-lg-8" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="<?= base_url('asset/img/profil/') . $user['image']; ?>" alt="..." class="img-fluid">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"><?= $user['name']; ?></h5>
-                    <p class="card-text"><?= $user['email']; ?>.</p>
-                    <p class="card-text"><small class="text-muted">Member dari <?= date('d F Y', $user['date_created']); ?></small></p>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Kategori Pemohon</label>
+                    <div class="col-sm-10"><select class="form-control" name="menu_id" id="menu_id">
+                            <option selected value="">Select Menu</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Informasi yang dibutuhkan</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Tujuan Penggunaan Informasi</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Tujuan Instansi</label>
+                    <div class="col-sm-10"><select class="form-control" name="menu_id" id="menu_id">
+                            <option selected value="">Select Menu</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row justify-content-end">
+                    <div class="col-sm-10">
+                        <button class="btn btn-primary" type="submit">Kirim Data</button>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
 
