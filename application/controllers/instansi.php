@@ -12,6 +12,8 @@ class Instansi extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+
+
         $data['title'] = 'Instansi';
         $this->load->view('templates/header_user', $data);
         $this->load->view('templates/sidebar', $data);

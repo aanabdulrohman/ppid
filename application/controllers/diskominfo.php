@@ -12,6 +12,8 @@ class Diskominfo extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+        $data['pemohon'] = $this->db->get('pengajuan_informasi')->result_array();
+
         $data['title'] = 'Admin Diskominfo';
         $this->load->view('templates/header_user', $data);
         $this->load->view('templates/sidebar', $data);

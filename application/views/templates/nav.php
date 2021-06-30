@@ -13,8 +13,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+    <!-- AOS Animated -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
     <!-- css -->
-    <link rel="stylesheet" href="<?= base_url() ?>asset/css/stylee.css">
+    <link href="<?= base_url('asset/'); ?>css/stylee.css" rel="stylesheet">
+
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/fea54b2e11.js" crossorigin="anonymous"></script>
 
     <title>PPID Kota Banjar</title>
 </head>
@@ -22,19 +28,19 @@
 <body>
 
     <!-- nav -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light  fixed-top   ">
+    <nav class="navbar navbar-expand-lg  bg-transparent" style="background-color: #F6F6F6;">
         <div class="container">
-            <a class="navbar-brand fs-4 fw-bolder txt" href="#" style="color: blue;">PPID Banjar</a>
+            <a class="navbar-brand fs-4 fw-bolder txt" href="#" style="color: #163172;">PPID Banjar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 ">
                     <li class="nav-item">
-                        <a class="nav-link active fw-blod fs-6" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active fw-bold fs-6" style="color: #1E56A0;" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-blodernfs-6" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle fw-blodernfs-6" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #112D4E;">
                             Alur
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -46,7 +52,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-blod fs-6" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle fw-blod fs-6" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #112D4E;">
                             PPID
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -55,7 +61,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-blod fs-6" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle fw-blod fs-6" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #112D4E;">
                             Informasi
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -65,7 +71,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fs-6 fw-blod" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle fs-6 fw-blod" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #112D4E;">
                             Jenis Dokumen
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -83,7 +89,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <a href="<?= base_url('auth/login'); ?>"><button class="btn btn-sm btn-outline-primary">Masuk</button></a>
+                    <a href="<?= base_url('auth/login'); ?>"><button class="tombol tbl">Masuk</button></a>
                 </ul>
 
             </div>

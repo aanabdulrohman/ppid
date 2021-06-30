@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,SAAS,CAAT,KAAS;EACL,MAAM,EAAE,WAAW;EACnB,aAAa,EAAE,CAAC;EAChB,QAAQ,EAAE,KAAK;;;AAGjB,AAAA,QAAQ,CAAC;EACP,UAAU,EAAE,QAAQ;EACpB,WAAW,EAAE,GAAG,CAAC,UAAU;EAC3B,IAAI,EAAE,kBAAkB;CACzB;;AACD,AAAA,QAAQ,AAAA,OAAO,CAAC;EACd,OAAO,EAAE,YAAY;CACtB;;AACD,AAAA,QAAQ,AAAA,MAAM,CAAC;EACb,KAAK,CAAA,IAAC;CACP",
+    "sources": [
+        "../asset/css/setel.scss"
+    ],
+    "names": [],
+    "file": "setel.css"
+}

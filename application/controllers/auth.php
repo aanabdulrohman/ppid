@@ -55,10 +55,11 @@ class Auth extends CI_Controller
                     if (password_verify($password, $user['password'])) {
                         $data = [
                             'email' => $user['email'],
-                            'role'  => $user['role']
+                            'role'  => $user['role'],
+                            'id'  => $user['id']
                         ];
                         $this->session->set_userdata($data);
-                        // filter admin/user
+                        // filter admin/user/instansi
                         if ($user['role'] == 1) {
                             redirect('admin');
                         } elseif ($user['role'] == 2) {

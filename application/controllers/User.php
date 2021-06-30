@@ -10,14 +10,38 @@ class User extends CI_Controller
     }
     public function index()
     {
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $data['title'] = 'Dashboard User';
-        $this->load->view('templates/header_user', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('user/index', $data);
-        $this->load->view('templates/footer_user');
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['katpem'] = $this->db->get('kategori_pem')->result_array();
+        $data['nama_instansi'] = $this->db->get('instansi')->result_array();
+
+        $this->form_validation->set_rules('katpem', 'Kategori Pemohon', 'required');
+        $this->form_validation->set_rules('info', 'Informasi yang dibutuhkan', 'required');
+        $this->form_validation->set_rules('tujuan', 'Tujuan penggunaan informasi', 'required');
+        $this->form_validation->set_rules('tujuan_ins', 'Tujuan instansi');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header_user', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('user/index', $data);
+            $this->load->view('templates/footer_user');
+        } else {
+            $data = [
+
+                'user_id' => $this->input->post('user_id'),
+                'katpem' => $this->input->post('katpem'),
+                'info' => $this->input->post('info'),
+                'tujuan' => $this->input->post('tujuan'),
+                'tujuan_ins' => $this->input->post('tujuan_ins')
+            ];
+            $this->db->insert('pengajuan_informasi', $data);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Submenu baru berhasil ditambahkan !
+            </div>');
+            redirect('user');
+        }
     }
 
     public function profile()
@@ -123,5 +147,38 @@ class User extends CI_Controller
                 }
             }
         }
+    }
+
+    public function permohonan()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('Pem_model', 'pem');
+
+        $data['pemohon'] = $this->pem->getPem();
+
+        // $data['pemohon'] = $this->db->get('pengajuan_informasi')->result_array();
+        $data['title'] = 'My Profile';
+        $this->load->view('templates/header_user', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('user/permohonan', $data);
+        $this->load->view('templates/footer_user');
+    }
+
+
+    public function permohonan_admin()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('Pem_model', 'pub');
+
+        $data['pemohon'] = $this->pub->getPublic();
+
+        // $data['pemohon'] = $this->db->get('pengajuan_informasi')->result_array();
+        $data['title'] = 'My Profile';
+        $this->load->view('templates/header_user', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('user/permohonan', $data);
+        $this->load->view('templates/footer_user');
     }
 }

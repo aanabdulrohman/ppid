@@ -6,20 +6,45 @@
 
     <div class="row">
         <div class="col">
-            <table class="table table-bordered">
-                <th>Nama</th>
-                <th>Pengajuan</th>
-                <th>Status</th>
-                <th>Aksi</th>
-                <tr>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                    <td class="text-center">
-                        <button class="btn btn-sm btn-primary">Detail</button>
-                    </td>
-                </tr>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Kategori pemohon</th>
+                        <th scope="col">Informasi yang dibutuhkan</th>
+                        <th scope="col">Tujuan penggunaan informasi</th>
+                        <th scope="col">Tujuan Instansi</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php $i = 0;
+                    foreach ($pemohon as $p) : {
+                            $i++;
+                        } ?>
+                        <tr>
+                            <th scope="row"><?= $i; ?></th>
+                            <td><?= $p['katpem']; ?></td>
+                            <td><?= $p['info']; ?></td>
+                            <td><?= $p['tujuan']; ?></td>
+                            <td><?= $p['tujuan_ins']; ?></td>
+                            <td>
+                                <a href="#"><span class="badge bg-success text-light">Sukses</span></a>
+                            </td>
+                            <td>
+                                <a href="#"><button class="btn btn-primary btn-sm">Disposisi</button></></a>
+                                <a href="#"><button class="btn btn-danger btn-sm">Tolak</button></></a>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                </tbody>
             </table>
+
         </div>
     </div>
 

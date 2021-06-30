@@ -1,0 +1,20 @@
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.counter {
+  transition: --num 5s;
+  counter-set: num var(--num);
+  font: 800 40px system-ui;
+}
+
+.counter::after {
+  content: counter(num);
+}
+
+.counter:hover {
+  --num: 100;
+}
+/*# sourceMappingURL=setel.css.map */
