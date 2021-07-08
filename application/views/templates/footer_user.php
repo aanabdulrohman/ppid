@@ -73,6 +73,8 @@
         });
     });
 </script>
+<script src="<?= base_url('asset/'); ?>js/modal.js"></script>
+
 </body>
 
 </html>

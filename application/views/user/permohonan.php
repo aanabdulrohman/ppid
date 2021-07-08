@@ -5,7 +5,7 @@
     <h1 class="h3 mb-4 text-gray-800">Daftar Pengajuan Informasi</h1>
 
     <div class="row">
-        <div class="col">
+        <div class="col-sm-2 col-md-4 col-lg-12">
 
             <!-- table -->
             <table class="table table-hover">
@@ -34,7 +34,7 @@
                             <td><?= $p['tujuan']; ?></td>
                             <td><?= $p['nama_instansi']; ?></td>
                             <td>
-                                <a href="#"><span class="badge bg-success text-light">Sukses</span></a>
+                                <a href="#"><span class="badge bg-warning text-light">Menunggu</span></a>
                             </td>
                         </tr>
 

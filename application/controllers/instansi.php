@@ -12,7 +12,9 @@ class Instansi extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+        $this->load->model('Pem_model', 'pub');
 
+        $data['pemohon2'] = $this->pub->getPublicinstansi_dispu();
 
         $data['title'] = 'Instansi';
         $this->load->view('templates/header_user', $data);

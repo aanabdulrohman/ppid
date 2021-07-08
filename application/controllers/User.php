@@ -181,4 +181,18 @@ class User extends CI_Controller
         $this->load->view('user/permohonan', $data);
         $this->load->view('templates/footer_user');
     }
+
+    public function informasi()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+
+
+        $data['title'] = 'Informasi Anda';
+        $this->load->view('templates/header_user', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('user/informasi', $data);
+        $this->load->view('templates/footer_user');
+    }
 }
