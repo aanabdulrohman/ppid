@@ -47,13 +47,15 @@ class Diskominfo extends CI_Controller
 
     public function kirim($id)
     {
+        $this->form_validation->set_rules('id_pengajuan', 'Pengajuan', 'required');
+        if ($this->form_validation->run() == false) {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->load->model('Pem_model', 'pub');
 
-        $data['pemohonn'] = $this->pub->getPublic();
+        // $data['pemohonn'] = $this->pub->getPublic();
 
-        $where = array('id' => $id);
-        $data['kirimm'] = $this->pub->getKirimById($where, 'pengajuan_informasi')->result();
+        // $where = array('id' => $id);
+        $data['kirim'] = $this->pub->getPengajuanInformasi($id);
 
         $data['title'] = 'Admin Diskominfo';
         $this->load->view('templates/header_user', $data);
@@ -61,6 +63,33 @@ class Diskominfo extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('diskominfo/kirim', $data);
         $this->load->view('templates/footer_user');
+        }else{
+            $id_pengajuan = $this->input->post('id_pengajuan');
+            $id_petugas_diskominfo = $this->session->userdata('id');
+            //kirim data ke table pengajuan_instansi
+            $data = [
+                'id_pengajuan_informasi' => $id_pengajuan,
+                'id_petugas_diskominfo' => $id_petugas_diskominfo,
+                'status' => 'diproses',
+                'created_pengajuan_instansi' => date('Y-m-d H:i:s')
+            ];
+            if($this->db->insert('pengajuan_instansi', $data)){
+                //update status ke table pengajuan_informasi
+                $data = array(
+                    'id_petugas' => $id_petugas_diskominfo,
+                    'status' => 'diproses',
+                    'updated_pengajuan' => date('Y-m-d H:i:s')
+                );
+                
+                $this->db->where('id', $id_pengajuan);
+                $this->db->update('pengajuan_informasi', $data);
+                $this->session->set_flashdata(['pesan'=>'Pengajuan berhasil dikirim', 'type'=>'success']);
+                redirect(base_url('Diskominfo'));
+            }else{
+                $this->session->set_flashdata(['pesan'=>'Pengajuan gagal dikirm', 'type'=>'danger']);
+                redirect(base_url('Diskominfo'));
+            }
+        }
     }
 
     public function update()
@@ -100,13 +129,86 @@ class Diskominfo extends CI_Controller
 
     public function disposisi()
     {
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('Pem_model', 'pub');
 
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['instansi'] = $this->pub->getFeedbackPengajuan();
         $data['title'] = 'Disposisi Diskominfo';
         $this->load->view('templates/header_user', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('diskominfo/disposisi', $data);
         $this->load->view('templates/footer_user');
+    }
+
+    public function tolak($id)
+    {
+        $this->load->model('Pem_model', 'pub');
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['tolak'] = $this->pub->getPengajuanInformasi($id);
+        $data['title'] = 'Admin Diskominfo';
+
+        $this->form_validation->set_rules('alasan', 'Alasan', 'required|trim');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header_user', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('diskominfo/tolak', $data);
+            $this->load->view('templates/footer_user');
+        }else{
+            //update data
+            $id_petugas = $this->session->userdata('id');
+            $id_pengajuan = $this->input->post('id_pengajuan');
+            $alasan = $this->input->post('alasan');
+            $tanggal_update = date('Y-m-d H:i:s');
+            $data = array(
+                'id_petugas' => $id_petugas,
+                'feedback' => $alasan,
+                'status' => 'ditolak',
+                'updated_pengajuan' => $tanggal_update
+            );
+            
+            $this->db->where('id', $id_pengajuan);
+            $query = $this->db->update('pengajuan_informasi', $data);
+            if($query){
+                $this->session->set_flashdata(['pesan'=>'Pengajuan berhasil ditolak', 'type'=>'success']);
+                redirect(base_url('Diskominfo'));
+            }else{
+                $this->session->set_flashdata(['pesan'=>'Pengajuan gagal ditolak', 'type'=>'danger']);
+                redirect(base_url('Diskominfo'));
+            }
+        }
+    }
+    public function lihat($id){
+        $this->load->model('Pem_model', 'pub');
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->db->select('pengajuan_instansi.feedback as nama_file, updated_pengajuan_instansi, ukuran_file, type_file, pengajuan_informasi.id, pengajuan_informasi.feedback');
+        $this->db->from('pengajuan_instansi');
+        $this->db->join('pengajuan_informasi','pengajuan_informasi.id=pengajuan_instansi.id_pengajuan_informasi');
+        $this->db->where('pengajuan_instansi.id',$id);
+        $data['file'] = $this->db->get()->row();
+        $data['title'] = 'Lihat PDF';
+        $this->load->view('templates/header_user', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('diskominfo/lihat', $data);
+        $this->load->view('templates/footer_user');
+    }
+    public function update_feedback($id, $feedback){
+        $data = [
+            'feedback' => $feedback,
+            'status' => 'dikirim',
+            'id_petugas' => $this->session->userdata('id'),
+            'updated_pengajuan' => date('Y-m-d H:i:s')
+        ];
+        $this->db->where('id', $id);
+        if($this->db->update('pengajuan_informasi', $data)){
+            $this->session->set_flashdata(['type'=>'success','pesan'=>'file berhasil dikirim']);
+        }else {
+            $this->session->set_flashdata(['type'=>'danger','pesan'=>'file gagal dikirim']);
+        }
+        redirect(base_url('diskominfo/disposisi'));
     }
 }

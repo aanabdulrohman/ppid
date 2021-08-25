@@ -7,7 +7,14 @@
     <div class="row">
         <div class="col-md-4 col-xs-4 col-lg-12">
 
-            <?= $this->session->flashdata('pesan'); ?>
+            <?php if($this->session->flashdata('pesan')): ?>
+                <div class="alert alert-<?=$this->session->flashdata('type')?> alert-dismissible fade show" role="alert">
+                    <?=$this->session->flashdata('pesan')?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif?>
 
             <table class="table table-hover">
                 <thead>
@@ -18,8 +25,8 @@
                         <th scope="col">Informasi yang dibutuhkan</th>
                         <th scope="col">Tujuan penggunaan informasi</th>
                         <th scope="col">Tujuan Instansi</th>
-                        <!-- <th scope="col">Status</th> -->
-                        <th scope="col">Aksi</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colspan="2">Aksi</th>
                         <!-- <th scope="col">Nama</th>   -->
                     </tr>
                 </thead>
@@ -36,15 +43,27 @@
                             <td><?= $p['info']; ?></td>
                             <td><?= $p['tujuan']; ?></td>
                             <td><?= $p['nama_instansi']; ?></td>
-                            <!-- <td>
-                                <a href="#"><span class="badge bg-success text-light">Sukses</span></a>
-                            </td> -->
                             <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <!-- <a href="<?= base_url(); ?>diskominfo/kirim/<?= $p['id']; ?>" class="btn btn-primary" data-toggle="modal" data-target="#newMenuModal">Disposisi</a> -->
+                                <?php if($p['status'] == 'menunggu') :?>
+                                    <span class="badge bg-warning text-light"><?=$p['status']?></span>
+                                <?php elseif($p['status'] == 'ditolak') : ?>
+                                    <span class="badge bg-danger text-light"><?=$p['status']?></span>
+                                <?php else :?>
+                                    <span class="badge bg-primary text-light"><?=$p['status']?></span>
+                                <?php endif?>
+                            </td>
+                            <td>
+                                <!-- <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="<?= base_url(); ?>diskominfo/kirim/<?= $p['id']; ?>" class="btn btn-primary" data-toggle="modal" data-target="#newMenuModal">Disposisi</a>
                                     <a href="<?= base_url(); ?>diskominfo/kirim/<?= $p['id']; ?>">coba</a>
-                                    <!-- <button type="button" class="btn btn-danger">Tolak</button> -->
-                                </div>
+                                    <button type="button" class="btn btn-danger">Tolak</button>
+                                </div> -->
+                                <a href="<?= base_url(); ?>diskominfo/kirim/<?= $p['id']; ?>">
+                                    <button class="btn btn-success" <?= (($p['status'] == 'ditolak') OR ($p['status'] == 'diproses')) ? 'disabled':''?>>Terima</button>
+                                </a>
+                                <a href="<?= base_url(); ?>diskominfo/tolak/<?= $p['id']; ?>">
+                                    <button class="btn btn-danger" <?= (($p['status'] == 'ditolak') OR ($p['status'] == 'diproses')) ? 'disabled':''?>>Tolak</button>
+                                </a>
                             </td>
                         </tr>
 

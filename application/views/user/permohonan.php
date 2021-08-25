@@ -34,7 +34,18 @@
                             <td><?= $p['tujuan']; ?></td>
                             <td><?= $p['nama_instansi']; ?></td>
                             <td>
-                                <a href="#"><span class="badge bg-warning text-light">Menunggu</span></a>
+                                <?php if($p['status'] == 'menunggu') :?>
+                                    <a href="#"><span class="badge bg-warning text-light"><?=$p['status']?></span></a>
+                                <?php elseif ($p['status'] == 'ditolak') :?>
+                                    <a href="<?=base_url('user/informasi/').$p['id']?>"><span class="badge bg-danger text-light"><?=$p['status']?></span></a>
+                                <?php elseif ($p['status'] == 'diproses') :?>
+                                    <a href="#"><span class="badge bg-primary text-light"><?=$p['status']?></span></a>
+                                <?php else :?>
+                                    <a href="<?=base_url('user/informasi/').$p['id']?>"><span class="badge bg-success text-light"><?=$p['status']?></span></a>
+                                <?php endif?>
+                            </td>
+                            <td>
+
                             </td>
                         </tr>
 
