@@ -1,39 +1,53 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Kirim Pengajuan Informasi</h1>
+    <h1 class="h3 mb-4 text-gray-800">Tolak Pengajuan Informasi</h1>
         <div class="row">
             <div class="col-md-4 col-xs-4 col-lg-12">
+                <?php if(validation_errors()):?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?=validation_errors()?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php endif?>
                 <form method="post" action="">
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="" value="<?= $kirim->name ?>" readonly>
-                        <input type="hidden" name="id_pengajuan" value="<?=$kirim->id?>">
+                        <input type="text" class="form-control" id="" value="<?=$tolak->name?>" readonly>
+                        <input type="hidden" name="id_pengajuan" value="<?=$tolak->id?>">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">Kategori Pemohon</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="" value="<?= $kirim->katpem ?>" readonly>
+                        <input type="text" class="form-control" id="" value="<?=$tolak->katpem?>" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">Tujuan Instansi</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="" value="<?= $kirim->nama_instansi ?>" readonly>
+                        <input type="text" class="form-control" id="" value="<?=$tolak->nama_instansi?>" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">Informasi yang dibutuhkan</label>
                         <div class="col-sm-10">
-                        <textarea  id="" class="form-control" readonly><?= $kirim->info ?></textarea>
+                        <textarea name="" id="" class="form-control" readonly><?=$tolak->info?></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-sm-2 col-form-label">Tujuan penggunaan informasi</label>
                         <div class="col-sm-10">
-                        <textarea  id="" class="form-control" readonly><?= $kirim->tujuan ?></textarea>
+                        <textarea name="" id="" class="form-control" readonly><?=$tolak->tujuan?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">Alasan </label>
+                        <div class="col-sm-10">
+                        <textarea name="alasan" id="" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

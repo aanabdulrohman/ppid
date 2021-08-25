@@ -35,10 +35,12 @@ class User extends CI_Controller
                 'katpem' => $this->input->post('katpem'),
                 'info' => $this->input->post('info'),
                 'tujuan' => $this->input->post('tujuan'),
-                'tujuan_ins' => $this->input->post('tujuan_ins')
+                'tujuan_ins' => $this->input->post('tujuan_ins'),
+                'status' => 'menunggu',
+                'created_pengajuan' => date('Y-m-d H:i:s')
             ];
             $this->db->insert('pengajuan_informasi', $data);
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Submenu baru berhasil ditambahkan !
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Permintaan berhasil dibuat !
             </div>');
             redirect('user');
         }
@@ -182,17 +184,25 @@ class User extends CI_Controller
         $this->load->view('templates/footer_user');
     }
 
-    public function informasi()
+    public function informasi($id)
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
-
-
+        
+        $this->db->select('pengajuan_informasi.feedback as nama_file, pengajuan_informasi.status, ukuran_file, type_file, updated_pengajuan_instansi');
+        $this->db->from('pengajuan_informasi');
+        $this->db->join('pengajuan_instansi','pengajuan_instansi.id_pengajuan_informasi=pengajuan_informasi.id','left');
+        $this->db->where('pengajuan_informasi.id',$id);
+        $data['informasi'] = $this->db->get()->row();
         $data['title'] = 'Informasi Anda';
         $this->load->view('templates/header_user', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/informasi', $data);
         $this->load->view('templates/footer_user');
+    }
+    public function download($file){
+        $this->load->helper('download');
+        force_download('asset/upload/'.$file, NULL);
+        // echo base_url('asset/upload/').$file;
     }
 }
